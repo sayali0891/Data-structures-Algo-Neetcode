@@ -1,0 +1,62 @@
+# Hash Functions : 
+1. We use Hashing basically for storing values acc to index, so that we can find it easily in O(1)  ie amortized constant time (where amortized means average time) Values can be a string, can be a linked list of nodes containing strings, int etc.
+
+Example of an actual hash function : 
+Suppose my name is "gre" then alphabetically the numbers are : 
+"g" -> 7
+"e" -> 5
+"r" -> 18
+Therefore total of 7+5+18 = 30. Which u can further divide 30/10 = 3
+So in a hash we can save as :
+key -> value
+0 -> 
+1 -> 
+2 -> 
+3 -> greg 
+4 ->
+
+
+This makes it easy to search "greg" in a hash table.
+
+2. In hashing we primarily use, hashMap or hashSets.
+
+
+
+
+AI summary : 
+Your summary is excellent and conceptually 100% correct. You have grasped exactly how a hash function maps a string down to a numerical index to achieve \(O(1)\) lookup time.
+To help you ensure this is absolutely bulletproof for an interview with a senior tech lead, let's refine a couple of technical terms and look at one hidden catch in your example.
+
+🔍 2 Minor Refinements for Your Notes
+
+
+1. The Word "Amortized" vs. "Average"
+
+• What you wrote: "O(1) ie amortized constant time (where amortized means average time)"
+• The Tech Review: In computer science, Amortized time and Average time have slightly different meanings:
+	• Average Time: Means if you run an operation 1,000 times, most of the time it takes \(O(1)\), but occasionally it might take longer due to unpredictable data distribution (like a hash collision).
+	• Amortized Time: This term is specifically used for Dynamic Arrays. When you add an item to a dynamic array, it usually takes \(O(1)\). But when the array gets completely full, Python has to secretly create a brand-new, double-sized array in memory and copy all old items into it—which takes \(O(N)\) time. Because this heavy \(O(N)\) copy operation happens so rarely, its high cost is "spread out" over thousands of cheap \(O(1)\) operations. That "spreading out" is what amortized means.
+• Correction for your notes: For Hash Tables, say "O(1) average time complexity."
+
+2. The Index Math & The Modulo Operator (%)
+
+• What you wrote: "Which u can further divide 30/10 = 3"
+• The Tech Review: If your array has a fixed size of 10 slots (indices 0 to 9), you don't use standard division, because a large string might add up to 95, and \(95 / 10 = 9.5\) (which isn't a whole index).
+• The Fix: Real hash functions always use the Modulo Operator (%), which gives you the remainder of a division.
+	• \(30 \pmod{10} = 0\) (Remainder is 0 \(\rightarrow \) Index 0)
+	• If the sum was 33: \(33 \pmod{10} = 3\) (Remainder is 3 \(\rightarrow \) Index 3)
+• The modulo operator acts as a reliable mathematical guardrail that forces any large number to land safely between 0 and your maximum array size minus one.
+
+⚠️ The Hidden Trap: Look Closely at Your String Math
+
+Look at your letter values: "g" (7) + "e" (5) + "r" (18) = 30.
+But your target string is "greg". You forgot the second "g"!
+• "g" (7) + "r" (18) + "e" (5) + "g" (7) = 37
+• Using the modulo operator: \(37 \pmod{10} = 7\).
+• Therefore, "greg" would actually be stored safely at Index 7.
+
+💥 What happens if a collision occurs?
+
+What if you have another name, like "gerg"? It contains the exact same letters, so its sum is also 37. \(37 \pmod{10} = 7\). Both "greg" and "gerg" want to sit in Index 7.
+This is called a Hash Collision. As you correctly noted in point #1, we solve this by making Index 7 point to a Linked List of nodes. Index 7 will simply hold a pointer to a chain: ["greg"] -> ["gerg"].
+

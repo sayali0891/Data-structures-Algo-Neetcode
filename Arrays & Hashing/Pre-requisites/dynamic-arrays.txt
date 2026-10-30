@@ -1,0 +1,10 @@
+1. Memory Allocation & Lifecycle
+
+• Low-Level Languages: Static arrays have a fixed size determined at compile-time and are allocated on the Stack. Dynamic arrays are allocated at runtime on the Heap using explicit pointers.
+• High-Level Languages (Python/JS): Both languages abstract memory management entirely. Arrays (Python lists and JS arrays) are reference types, meaning their underlying memory structures are always allocated on the Heap. The variable on the Stack merely holds a reference pointer to that Heap location.
+
+2. Dynamic Resizing Mechanics & Amortized Complexity
+
+• The Mechanism: When a dynamic array hits its capacity limit, the runtime cannot simply expand it in place because adjacent memory blocks might be occupied. Instead, it allocates a completely new, larger block of contiguous memory on the heap, copies the existing elements over, and then deallocates (or garbage collects) the old array.
+• Why Sequential Growth Fails: Naively increasing capacity by \(+1\) on every overflow requires copying elements every single time. A single insertion becomes an \(O(N)\) operation, degrading overall insertion to \(O(N^2)\).
+• Geometric Resizing (Array Doubling): To optimize this, engines use geometric growth (e.g., doubling the capacity from 4 to 8). While the resizing step itself is still an expensive \(O(N)\) copy operation, it happens so infrequently that the cost is spread out. This gives append operations an Amortized Time Complexity of \(O(1)\).
