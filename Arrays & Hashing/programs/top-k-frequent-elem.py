@@ -11,8 +11,27 @@ Output: [2,3]
 Basically top 2 frequent elements in a list
 '''
 def top_k_freq_elems(nums: list[int], k: int) -> list[int]:
-    pass
+    hashMap = {}
+    freq = [[] for i in range(len(nums) + 1)]
+    print(freq)
 
+    for num in nums:
+        hashMap[num] = hashMap.get(num, 0) + 1
+
+    print(hashMap)
+
+    for value, count in hashMap.items():
+        freq[count].append(value)
+    print(freq)            
+
+    res = []
+    for i in range(len(freq) - 1, 0, -1):
+        print(freq[i])
+        # if len(freq[i]) > 0:
+        for n in freq[i]:
+            res.append(n)
+            if len(res) == k:
+                return res
             
             
 
